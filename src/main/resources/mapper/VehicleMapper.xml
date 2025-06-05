@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bms.mapper.VehicleMapper">
+    <select id="selectByCid" resultType="org.example.bms.entity.Vehicle">
+        SELECT * FROM vehicle WHERE cid = #{cid}
+    </select>
+
+    <!-- 插入车辆信息 -->
+    <insert id="insert" parameterType="org.example.bms.entity.Vehicle" useGeneratedKeys="true" keyProperty="vehicle.id">
+        INSERT INTO vehicle (
+            cid,
+            battery_type,
+            total_mileage,
+            battery_health
+        ) VALUES (
+            #{vehicle.cid},
+            #{vehicle.batteryType},
+            #{vehicle.totalMileage},
+            #{vehicle.batteryHealth}
+        )
+    </insert>
+
+</mapper> 

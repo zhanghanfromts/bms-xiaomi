@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bms.mapper.VehicleSignalMapper">
+
+    <!-- 插入单条信号数据（分表） -->
+    <insert id="insert">
+        INSERT INTO vehicle_signal_${tableSuffix} (
+            cid, signal_data, report_time, warn_id
+        ) VALUES (
+            #{signal.cid},
+            #{signal.signalData},
+            #{signal.reportTime},
+            #{signal.warnId}
+        )
+    </insert>
+
+    <!-- 查询指定时间范围内的最新信号 -->
+    <select id="selectLatestSignals" resultType="org.example.bms.entity.VehicleSignal">
+        SELECT 
+            id, cid, signal_data as signalData, 
+            report_time as reportTime, warn_id as warnId
+        FROM vehicle_signal_${tableSuffix}
+        WHERE report_time >= #{startTime}
+        ORDER BY report_time DESC
+    </select>
+
+    <!-- 查询指定车辆的最新10条信号 -->
+    <select id="selectLatestSignal" resultType="org.example.bms.entity.VehicleSignal">
+        SELECT 
+            id, cid, signal_data as signalData, 
+            report_time as reportTime, warn_id as warnId
+        FROM vehicle_signal_${tableSuffix}
+        WHERE cid = #{cid}
+        ORDER BY report_time DESC
+        LIMIT 10
+    </select>
+
+    <!-- 批量插入信号数据 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO vehicle_signal_${tableSuffix} (
+            cid, report_time, signal_data, warn_id
+        ) VALUES 
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.cid}, #{item.reportTime}, #{item.signalData}, #{item.warnId}
+            )
+        </foreach>
+    </insert>
+</mapper> 

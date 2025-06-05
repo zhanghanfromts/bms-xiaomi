@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bms.mapper.VehicleWarnMapper">
+    <insert id="insert" parameterType="org.example.bms.entity.VehicleWarn">
+        INSERT INTO vehicle_warn (
+            cid, battery_type, warn_id, warn_name, 
+            warn_level, warn_time, signal_data
+        ) VALUES (
+            #{cid}, #{batteryType}, #{warnId}, #{warnName},
+            #{warnLevel}, #{warnTime}, #{signalData}
+        )
+    </insert>
+
+    <select id="selectByCid" resultType="org.example.bms.entity.VehicleWarn">
+        SELECT *
+        FROM vehicle_warn
+        WHERE cid = #{cid}
+        ORDER BY warn_time DESC
+        LIMIT 10
+    </select>
+</mapper> 

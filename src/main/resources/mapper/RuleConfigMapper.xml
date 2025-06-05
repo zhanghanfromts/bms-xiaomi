@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.bms.mapper.RuleConfigMapper">
+    <select id="selectByBatteryType" resultType="org.example.bms.entity.RuleConfig">
+        SELECT * FROM rule_config WHERE battery_type = #{batteryType}
+    </select>
+    
+    <select id="selectByWarnIdAndBatteryType" resultType="org.example.bms.entity.RuleConfig">
+        SELECT * FROM rule_config 
+        WHERE warn_id = #{warnId} AND battery_type = #{batteryType}
+    </select>
+</mapper> 
